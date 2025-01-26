@@ -1,0 +1,45 @@
+{
+  "kind": "collectionType",
+  "collectionName": "regions",
+  "info": {
+    "singularName": "region",
+    "pluralName": "regions",
+    "displayName": "Region"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "blocks"
+    },
+    "climate": {
+      "type": "enumeration",
+      "enum": [
+        "arctic",
+        "temperate",
+        "tropical",
+        "desert",
+        "coastal",
+        "mountainous"
+      ]
+    },
+    "density": {
+      "type": "enumeration",
+      "enum": [
+        "uninhabited",
+        "sparse",
+        "moderate",
+        "dense",
+        "overcrowded"
+      ]
+    },
+    "faction": {
+      "type": "string"
+    }
+  }
+}
