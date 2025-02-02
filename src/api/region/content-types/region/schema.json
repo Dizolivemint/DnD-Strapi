@@ -4,7 +4,8 @@
   "info": {
     "singularName": "region",
     "pluralName": "regions",
-    "displayName": "Region"
+    "displayName": "Region",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -12,7 +13,8 @@
   "pluginOptions": {},
   "attributes": {
     "name": {
-      "type": "string"
+      "type": "string",
+      "required": true
     },
     "description": {
       "type": "blocks"
@@ -40,6 +42,24 @@
     },
     "faction": {
       "type": "string"
+    },
+    "x": {
+      "type": "decimal",
+      "required": true,
+      "min": 0,
+      "max": 100
+    },
+    "y": {
+      "type": "decimal",
+      "required": true,
+      "min": 0,
+      "max": 100
+    },
+    "map": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::map.map",
+      "mappedBy": "region"
     }
   }
 }

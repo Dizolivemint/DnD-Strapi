@@ -1,3 +1,7 @@
+switch-strapi prod  # Switch to production
+# or
+switch-strapi dev   # Switch to development
+
 # 🚀 Getting started with Strapi
 
 Strapi comes with a full featured [Command Line Interface](https://docs.strapi.io/dev-docs/cli) (CLI) which lets you scaffold and manage your project in seconds.

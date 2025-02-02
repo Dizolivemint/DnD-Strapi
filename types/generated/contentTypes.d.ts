@@ -398,9 +398,40 @@ export interface ApiCampaignCampaign extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiMapMap extends Struct.CollectionTypeSchema {
+  collectionName: 'maps';
+  info: {
+    displayName: 'Map';
+    pluralName: 'maps';
+    singularName: 'map';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    height: Schema.Attribute.Integer & Schema.Attribute.Private;
+    image: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::map.map'> &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    region: Schema.Attribute.Relation<'oneToOne', 'api::region.region'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    width: Schema.Attribute.Integer & Schema.Attribute.Private;
+    world: Schema.Attribute.Relation<'oneToOne', 'api::world.world'>;
+  };
+}
+
 export interface ApiRegionRegion extends Struct.CollectionTypeSchema {
   collectionName: 'regions';
   info: {
+    description: '';
     displayName: 'Region';
     pluralName: 'regions';
     singularName: 'region';
@@ -426,15 +457,34 @@ export interface ApiRegionRegion extends Struct.CollectionTypeSchema {
       'api::region.region'
     > &
       Schema.Attribute.Private;
-    name: Schema.Attribute.String;
+    map: Schema.Attribute.Relation<'oneToOne', 'api::map.map'>;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    x: Schema.Attribute.Decimal &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 100;
+          min: 0;
+        },
+        number
+      >;
+    y: Schema.Attribute.Decimal &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 100;
+          min: 0;
+        },
+        number
+      >;
   };
 }
 
-export interface ApiWorldWorld extends Struct.SingleTypeSchema {
+export interface ApiWorldWorld extends Struct.CollectionTypeSchema {
   collectionName: 'worlds';
   info: {
     description: '';
@@ -453,8 +503,8 @@ export interface ApiWorldWorld extends Struct.SingleTypeSchema {
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::world.world'> &
       Schema.Attribute.Private;
-    map: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
-    name: Schema.Attribute.String;
+    map: Schema.Attribute.Relation<'oneToOne', 'api::map.map'>;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
     regions: Schema.Attribute.Relation<'oneToMany', 'api::region.region'>;
     updatedAt: Schema.Attribute.DateTime;
@@ -973,6 +1023,7 @@ declare module '@strapi/strapi' {
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
       'api::campaign.campaign': ApiCampaignCampaign;
+      'api::map.map': ApiMapMap;
       'api::region.region': ApiRegionRegion;
       'api::world.world': ApiWorldWorld;
       'plugin::content-releases.release': PluginContentReleasesRelease;
